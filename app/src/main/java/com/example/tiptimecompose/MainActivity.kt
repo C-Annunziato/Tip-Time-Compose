@@ -17,6 +17,7 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import kotlin.math.cos
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -29,6 +30,9 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 fun TipTimeScreen(modifier: Modifier = Modifier) {
+
+    var costOfService by rememberSaveable { mutableStateOf("") }
+
     Column(
         modifier = Modifier
             .padding(32.dp)
@@ -40,18 +44,16 @@ fun TipTimeScreen(modifier: Modifier = Modifier) {
             text = stringResource(id = R.string.calculate_tip), fontSize = 24.sp
         )
         Spacer(modifier = Modifier.height(16.dp))
-        EditNumberfield()
+        EditNumberfield(value = costOfService, onValueChange = { costOfService = it })
     }
 }
 
 @Composable
-fun EditNumberfield() {
-
-    var costOfService by rememberSaveable { mutableStateOf("") }
+fun EditNumberfield(value: String, onValueChange: (String) -> Unit) {
 
     TextField(
-        value = costOfService,
-        onValueChange = { input -> costOfService = input },
+        value = value,
+        onValueChange = onValueChange,
         singleLine = true,
         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
         label = {
