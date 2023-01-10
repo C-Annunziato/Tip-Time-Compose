@@ -23,6 +23,7 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import java.text.NumberFormat
 import java.util.Locale
 
 const val TAG = "main"
@@ -105,7 +106,10 @@ private fun calculateAmounts(bill: Double, tipPercent: Double = 15.0): Pair<Stri
     val tip = "%.2f".format(Locale.US, bill * (tipPercent / 100))
     val total = "%.2f".format(Locale.US,tip.toDouble() + bill)
 
-    return Pair(tip, total)
+    val fmtTip = NumberFormat.getCurrencyInstance().format(tip.toDouble())
+    val fmtTotal = NumberFormat.getCurrencyInstance().format(total.toDouble())
+
+    return Pair(fmtTip, fmtTotal)
 
 }
 
